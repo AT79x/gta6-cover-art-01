@@ -1,12 +1,77 @@
-html, body { margin: 0; height: 100%; background: #f2f0f4; color: #1d1b22; font: 15px/1.4 system-ui, sans-serif; }
-.app { display: flex; gap: 32px; align-items: center; justify-content: center; height: 100%; padding: 24px; box-sizing: border-box; }
-.controls { display: flex; flex-direction: column; gap: 14px; width: 280px; }
-.controls h1 { margin: 0; font-size: 28px; }
-.controls p { margin: 0; color: #5c5866; }
-label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; }
-input[type=text] { font: inherit; padding: 8px; border: 1px solid #c9c4d1; border-radius: 6px; }
-button { font: inherit; font-weight: 700; padding: 10px; border: 0; border-radius: 6px; background: #1d1b22; color: #fff; cursor: pointer; }
-canvas { width: min(70vh, 60vw); height: min(70vh, 60vw); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); }
-body.shot-cover .controls { display: none; }
+/* Solmar Bay Cover Maker — the editor's own look: dark plum panels, a Vice
+   City sunset accent, and the preview front and centre. */
+
+html, body { margin: 0; height: 100%; background: #160a24; color: #f2ecf7; font: 15px/1.45 system-ui, sans-serif; }
+body { display: flex; flex-direction: column; }
+* { box-sizing: border-box; }
+
+.topbar {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 24px;
+  padding: 14px 24px 10px;
+  background: linear-gradient(90deg, #2b103f, #7a1e5e 55%, #c2452f);
+  border-bottom: 3px solid #ff7a3d;
+}
+.topbar h1 { margin: 0; font-size: 26px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+.topbar p { margin: 2px 0 0; color: #f7d9e8; font-size: 13px; }
+.tag { font-size: 12px; font-weight: 700; letter-spacing: 1px; color: #ffe9c9; white-space: nowrap; }
+
+.app { flex: 1; display: flex; gap: 20px; padding: 16px 24px 20px; min-height: 0; }
+.controls {
+  width: 330px; flex: none; overflow-y: auto; display: flex; flex-direction: column; gap: 18px;
+  padding-right: 6px;
+}
+.controls section { background: #221239; border: 1px solid #3d2358; border-radius: 10px; padding: 14px; }
+.controls h2 { margin: 0 0 10px; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: #ff9a5c; }
+.controls label { display: flex; flex-direction: column; gap: 6px; font-weight: 600; font-size: 13px; margin-bottom: 10px; }
+.controls label:last-child { margin-bottom: 0; }
+
+input[type=text] {
+  font: inherit; padding: 9px 10px; border: 1px solid #5b3a7a; border-radius: 6px;
+  background: #160a24; color: #fff;
+}
+input[type=range] { width: 100%; accent-color: #ff5e3a; }
+input[type=file] { font: inherit; font-size: 13px; }
+.upload { cursor: pointer; }
+
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  font: inherit; font-weight: 700; padding: 9px 12px; border: 1px solid #5b3a7a; border-radius: 6px;
+  background: #2b1845; color: #f2ecf7; cursor: pointer;
+}
+button:hover { border-color: #ff7a3d; }
+button.active { background: #ff5e3a; border-color: #ff5e3a; color: #fff; }
+button.export {
+  width: 100%; margin-top: 10px; padding: 13px; font-size: 17px;
+  background: linear-gradient(90deg, #ff5e3a, #ff2e88); border: 0; color: #fff;
+}
+button.export:hover { filter: brightness(1.1); }
+
+.tray { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0; }
+.thumb {
+  padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden;
+  background: #160a24; text-align: left;
+}
+.thumb img { display: block; width: 100%; height: 64px; object-fit: cover; }
+.thumb span { display: block; padding: 4px 6px; font-size: 11px; font-weight: 600; color: #d9c8e8; }
+.thumb.assigned { border-color: #ff7a3d; }
+.thumb.assigned span { color: #fff; }
+
+.hint { margin: 8px 0 0; font-size: 12px; color: #b9a3cf; font-weight: 400; }
+.panel-label { margin: 0 0 8px; font-size: 13px; font-weight: 700; color: #ffe9c9; }
+#status { margin: 10px 0 0; font-size: 13px; color: #8ef0c0; min-height: 1.2em; }
+
+.preview { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-width: 0; }
+.preview canvas {
+  max-width: 100%; max-height: calc(100vh - 170px);
+  box-shadow: 0 14px 44px rgba(0, 0, 0, 0.55);
+  cursor: grab; touch-action: none;
+}
+.preview canvas:active { cursor: grabbing; }
+.preview .hint { margin: 0; }
+
+/* Screenshot scenes: the cover alone, edge to edge. */
+body.shot-cover { background: #160a24; }
+body.shot-cover .topbar, body.shot-cover .controls, body.shot-cover .preview .hint { display: none; }
 body.shot-cover .app { padding: 0; }
-body.shot-cover canvas { width: 100vw; height: 100vh; box-shadow: none; }
+body.shot-cover .preview { display: block; }
+body.shot-cover canvas { display: block; width: 100vw; height: 100vh; object-fit: contain; max-height: none; box-shadow: none; cursor: default; }
